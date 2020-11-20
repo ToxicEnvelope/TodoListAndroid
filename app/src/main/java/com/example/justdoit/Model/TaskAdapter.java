@@ -132,13 +132,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         final Task task = mTaskList.get(holder.getAdapterPosition());
         holder.completeSwitch.setChecked(task.getIsCompleted().equals(StaticStringUtil.COMPLETED));
         if (task.getIsCompleted().equals(StaticStringUtil.COMPLETED)) {
-            holder.completeSwitch.setChecked(true);
+
             holder.completeSwitch.setEnabled(false);
             holder.editButton.setEnabled(false);
             Log.d(TAG, "onBindViewHolder: is checked"+position);
             holder.cardLayout.setCardBackgroundColor(Color.LTGRAY);
         }else{
-            holder.completeSwitch.setChecked(false);
             holder.completeSwitch.setEnabled(true);
             holder.editButton.setEnabled(true);
             holder.cardLayout.setCardBackgroundColor(Color.WHITE);
