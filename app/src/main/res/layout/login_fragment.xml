@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title_1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="50dp"
+            android:gravity="center"
+            android:text="Login"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp" />
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_1_tv"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColor="@color/colorPrimary"
+                android:textCursorDrawable="@color/colorPrimary"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/email_layout"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="5dp"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="@color/colorPrimary"
+                android:textCursorDrawable="@color/colorPrimary"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <RelativeLayout
+
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/password_layout">
+
+
+                <Button
+
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_toEndOf="@+id/sign_up_btn"
+                    android:id="@+id/login_btn"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="Login"
+                    android:textAllCaps="false"
+                    android:textSize="20sp" />
+                <Button
+
+                    android:id="@+id/sign_up_btn"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="Sign-Up"
+                    android:textAllCaps="false"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+
+</ScrollView>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/check_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:src="@drawable/ic_baseline_check_circle_24"
+        android:visibility="gone">
+
+    </ImageButton>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_toEndOf="@+id/check_btn"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/card_realtive_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_below="@+id/content"
+                    android:id="@+id/switch_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    android:checked="false"
+                    android:text="Completed">
+
+                </androidx.appcompat.widget.SwitchCompat>
+
+                <TextView
+
+                    android:textColor="@color/colorBlack"
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Description: "
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:id="@+id/content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_toEndOf="@+id/description"
+                    android:maxLength="120"
+                    android:textSize="13sp">
+
+                </TextView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:id="@+id/creation_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/switch_toggle"
+                    android:layout_marginVertical="3dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="Creation date"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:id="@+id/create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/switch_toggle"
+                    android:layout_marginVertical="3dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/creation_date"
+                    android:textSize="13sp">
+
+                </TextView>
+
+
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/edit_option"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/switch_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:text="edit"
+                    android:textColor="@color/colorWhite"
+                    android:drawableTint="@color/colorWhite"
+                    app:icon="@drawable/ic_add_post" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
