@@ -1,4 +1,4 @@
-package com.example.justdoit;
+package com.example.cotherapist;
 
 import android.content.Context;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.justdoit">
+    package="com.example.cotherapist"><!--    package="com.example.cotherapist">-->
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,12 +14,12 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".View.TaskAcitivty"
+            android:name="com.example.cotherapist.View.TaskAcitivty"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".View.MainActivity"
+            android:name="com.example.cotherapist.View.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".Model.AlertRecevier"/>
+        <receiver android:name="com.example.cotherapist.Model.AlertRecevier"/>
 
 
 

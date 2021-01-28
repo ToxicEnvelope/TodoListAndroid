@@ -1,4 +1,4 @@
-package com.example.justdoit.Model;
+package com.example.cotherapist.Model;
 
 public enum ViewModelEnum {
     Welcome,

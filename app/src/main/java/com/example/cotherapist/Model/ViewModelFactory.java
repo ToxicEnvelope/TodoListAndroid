@@ -1,16 +1,15 @@
-package com.example.justdoit.Model;
+package com.example.cotherapist.Model;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.justdoit.ViewModel.AdapterViewModel;
-import com.example.justdoit.ViewModel.LoginViewModel;
-import com.example.justdoit.ViewModel.SignUpViewModel;
-import com.example.justdoit.ViewModel.TasksViewModel;
+import com.example.cotherapist.ViewModel.AdapterViewModel;
+import com.example.cotherapist.ViewModel.LoginViewModel;
+import com.example.cotherapist.ViewModel.SignUpViewModel;
+import com.example.cotherapist.ViewModel.TasksViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private Context mContext;

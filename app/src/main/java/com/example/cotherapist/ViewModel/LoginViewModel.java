@@ -1,11 +1,11 @@
-package com.example.justdoit.ViewModel;
+package com.example.cotherapist.ViewModel;
 
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.justdoit.Repository.Repository;
+import com.example.cotherapist.Repository.Repository;
 
 public class LoginViewModel extends ViewModel {
 
@@ -31,12 +31,12 @@ public class LoginViewModel extends ViewModel {
     private void attachLoginListener() {
         mRepository.setLoginListener(new Repository.RepositoryLoginInterface() {
             @Override
-            public void onUserLoginucceed() {
+            public void onUserLoginSucceed() {
                 mOnLoginSuccess.setValue(true);
             }
 
             @Override
-            public void onUserLoginSFailed() {
+            public void onUserLoginFailed() {
                 mOnLoginSuccess.setValue(false);
             }
         });
@@ -51,7 +51,6 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void LoginUser(String email, String password) {
-
         mRepository.loginUser(email,password);
     }
 

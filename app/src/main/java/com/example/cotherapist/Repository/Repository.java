@@ -1,4 +1,4 @@
-package com.example.justdoit.Repository;
+package com.example.cotherapist.Repository;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,8 +15,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.justdoit.Model.Task;
-import com.example.justdoit.Model.User;
+import com.example.cotherapist.Model.Task;
+import com.example.cotherapist.Model.Therapist.Therapist;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -29,26 +29,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Repository {
+public class Repository extends BaseRepository {
 
-    private static final String TAG = "Repository";
-
-    private final String SIGN_UP_URI = "http://10.0.0.11:8081/api/v1/users/sign-in";
-    private final String LOGIN_URI = "http://10.0.0.11:8081/api/v1/users/login";
-    private final String GET_TASK = "http://10.0.0.11:8081/api/v1/tasks/<task_id>";
-    private final String GET_ALL_TASKS = "http://10.0.0.11:8081/api/v1/tasks";
-    private final String UPLOAD_TASK = "http://10.0.0.11:8081/api/v1/tasks";
-    private final String UPDATE_TASK = "http://10.0.0.11:8081/api/v1/tasks/";
-    private final String DELETE_TASK = "http://10.0.0.11:8081/api/v1/tasks/";
-
+    private final String SIGN_UP_URI = BASE_URL.concat("/accounts/sign-in");
+    private final String LOGIN_URI = BASE_URL.concat("/accounts/login");
+    private final String GET_TASK = BASE_URL.concat("/tasks/<task_id>");
+    private final String GET_ALL_TASKS = BASE_URL.concat("/tasks");
+    private final String UPLOAD_TASK = BASE_URL.concat("/tasks");
+    private final String UPDATE_TASK = BASE_URL.concat("/tasks/");
+    private final String DELETE_TASK = BASE_URL.concat("/tasks/");
 
     private static Repository mRepository;
-    private User mUser;
     private Gson gson;
     private Context mContext;
-    private String authKey;
-    private Task mTask;
-
 
     public static Repository getInstance(final Context context) {
         if (mRepository == null) {
@@ -62,23 +55,10 @@ public class Repository {
         gson = new Gson();
     }
 
-
-
-    public interface RepositorySignUpInterface {
-        void onUserSignUpSucceed();
-        void onUserSignUpSFailed();
-    }
-
     private RepositorySignUpInterface mSignUpListener;
 
     public void setSignUpListener(RepositorySignUpInterface repositoryLoginInterface) {
         this.mSignUpListener = repositoryLoginInterface;
-    }
-
-    public interface RepositoryLoginInterface {
-        void onUserLoginucceed();
-
-        void onUserLoginSFailed();
     }
 
     private RepositoryLoginInterface mLoginListener;
@@ -87,38 +67,19 @@ public class Repository {
         this.mLoginListener = repositoryLoginInterface;
     }
 
-
-    public interface RepositoryDownloadTasksInterface {
-        void onUserDownloadTasksucceed(List<Task> taskList);
-        void onUserDownloadTasksSFailed(String error);
-    }
-
     private RepositoryDownloadTasksInterface mDownloadTasksListener;
 
     public void setDownloadTasksListener(RepositoryDownloadTasksInterface repositoryDownloadTasksInterface) {
         this.mDownloadTasksListener = repositoryDownloadTasksInterface;
     }
 
-
     //***--------------**//
     //Upload Task
-    public interface RepositoryUploadTaskInterface {
-        void onUploadTasksucceed(Task task);
-        void onUploadTasksSFailed(String error);
-    }
 
     private RepositoryUploadTaskInterface mUploadTaskListener;
 
     public void setUploadTaskListener(RepositoryUploadTaskInterface repositoryUploadInterface) {
         this.mUploadTaskListener = repositoryUploadInterface;
-    }
-
-    //***--------------**//
-    //Update Task
-
-    public interface RepositoryUpdateTaskInterface {
-        void onUpdateTasksucceed(Task task,String description,boolean isCompleted);
-        void onUpdateTasksFailed(String error);
     }
 
     private RepositoryUpdateTaskInterface mUpdateTaskListener;
@@ -127,17 +88,8 @@ public class Repository {
         this.mUpdateTaskListener = repositoryUpdateInterface;
     }
 
-
-
-
     //***--------------**//
     //Delete Task
-
-
-    public interface RepositoryDeleteTaskInterface {
-        void onDeleteTasksucceed(Task task);
-        void onDeleteTasksSFailed();
-    }
 
     private RepositoryDeleteTaskInterface mDeleteTaskListener;
 
@@ -151,32 +103,33 @@ public class Repository {
 
         final HashMap<String, String> postParams = new HashMap<String, String>();
 
-        postParams.put("email", email);
-        postParams.put("password", password);
+        postParams.put("userEmail", email);
+        postParams.put("userPassword", password);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 LOGIN_URI, new JSONObject(postParams),
-                new com.android.volley.Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         //Log.d("TAG", response.toString());
                         try {
                             //Toast.makeText(mContext, response.getString("message"), Toast.LENGTH_LONG).show();
                             if (mLoginListener != null) {
-                                mLoginListener.onUserLoginucceed();
+                                mLoginListener.onUserLoginSucceed();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                }, new com.android.volley.Response.ErrorListener() {
+                }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 //VolleyLog.d("TAG", "Error: " + error.getMessage());
                 Log.d(TAG, "onErrorResponse: error network");
                 if (mLoginListener != null) {
-                    mLoginListener.onUserLoginSFailed();
+                    Toast.makeText(mContext, "username or password isn't correct!", Toast.LENGTH_LONG).show();
+                    mLoginListener.onUserLoginFailed();
                 }
             }
         }) {
@@ -187,7 +140,6 @@ public class Repository {
             }
 
             @Override
-
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String jsonString = new String(response.data,
@@ -195,10 +147,8 @@ public class Repository {
                     JSONObject jsonResponse = new JSONObject(jsonString);
 
                     jsonResponse.put("headers", new JSONObject(response.headers));
-
-                    authKey = jsonResponse.getJSONObject("headers").getString("Authorization");
-                    Log.d(TAG, "parseNetworkResponse: " + authKey);
-//                    mUser.setHeader(auth);
+                    setAuthKey(jsonResponse.getJSONObject("headers").getString("Authorization"));
+                    Log.d(TAG, "parseNetworkResponse: " + getAuthKey());
                     return Response.success(jsonResponse,
                             HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
@@ -213,22 +163,21 @@ public class Repository {
         requestQueue.add(jsonObjReq);
     }
 
-    public void signUpUser(User user) {
+    public void signUpUser(Therapist therapist) {
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-        mUser = user;
+        setTherapist(therapist);
         final HashMap<String, String> postParams = new HashMap<String, String>();
-        postParams.put("name", user.getName());
-        postParams.put("email", user.getEmail());
-        postParams.put("password", user.getPassword());
+        postParams.put("userFullName", therapist.getFullName());
+        postParams.put("userEmail", therapist.getEmail());
+        postParams.put("userPassword", therapist.getPassword());
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 SIGN_UP_URI, new JSONObject(postParams),
-                new com.android.volley.Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //Log.d("TAG", response.toString());
+//                        Log.d("TAG", response.toString());
                         try {
-                            //Toast.makeText(mContext, response.getString("message"), Toast.LENGTH_LONG).show();
                             Toast.makeText(mContext, "Thank you for your Sign UP", Toast.LENGTH_LONG).show();
                             if (mSignUpListener != null) {
                                 mSignUpListener.onUserSignUpSucceed();
@@ -237,13 +186,13 @@ public class Repository {
                             e.printStackTrace();
                         }
                     }
-                }, new com.android.volley.Response.ErrorListener() {
+                }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 //VolleyLog.d("TAG", "Error: " + error.getMessage());
                 if (mSignUpListener != null) {
-                    mSignUpListener.onUserSignUpSFailed();
+                    mSignUpListener.onUserSignUpFailed();
                 }
             }
         }) {
@@ -254,7 +203,6 @@ public class Repository {
             }
 
             @Override
-
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String jsonString = new String(response.data,
@@ -262,7 +210,7 @@ public class Repository {
                     JSONObject jsonResponse = new JSONObject(jsonString);
                     jsonResponse.put("headers", new JSONObject(response.headers));
                     Log.d(TAG, "parseNetworkResponse: " + jsonResponse.getJSONObject("headers").getString("Authorization"));
-                    authKey = jsonResponse.getJSONObject("headers").getString("Authorization");
+                    setAuthKey(jsonResponse.getJSONObject("headers").getString("Authorization"));
                     return Response.success(jsonResponse,
                             HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
@@ -276,8 +224,6 @@ public class Repository {
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(8000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Adding request to request queue
         requestQueue.add(jsonObjReq);
-
-
     }
 
     public void getAllTasks() {
@@ -285,7 +231,7 @@ public class Repository {
         final List<Task> tasksList = new ArrayList<>();
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 GET_ALL_TASKS, null,
-                new com.android.volley.Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -296,17 +242,17 @@ public class Repository {
                                 tasksList.add(task);
                             }
                             if (mDownloadTasksListener != null) {
-                                mDownloadTasksListener.onUserDownloadTasksucceed(tasksList);
+                                mDownloadTasksListener.onUserDownloadTasksSucceed(tasksList);
                             }
 
                         } catch (Exception e) {
                             if (mDownloadTasksListener != null) {
-                                mDownloadTasksListener.onUserDownloadTasksSFailed(e.getMessage());
+                                mDownloadTasksListener.onUserDownloadTasksFailed(e.getMessage());
                             }
                             e.printStackTrace();
                         }
                     }
-                }, new com.android.volley.Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "onErrorResponse: error network");
@@ -315,7 +261,7 @@ public class Repository {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> authHeader = new HashMap<>();
-                authHeader.put("Authorization", authKey);
+                authHeader.put("Authorization", getAuthKey());
                 return authHeader;
             }
 
@@ -337,7 +283,7 @@ public class Repository {
         postParams.put("taskDescription", taskDescription);
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 UPLOAD_TASK, new JSONObject(postParams),
-                new com.android.volley.Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -352,17 +298,17 @@ public class Repository {
                             task.setTaskId(taskId);
                             if (mUploadTaskListener != null) {
                                 Log.d(TAG, "onResponse: "+task.getDescription());
-                                mUploadTaskListener.onUploadTasksucceed(task);
+                                mUploadTaskListener.onUploadTasksSucceed(task);
                             }
 
                         } catch (Exception e) {
                             if (mUploadTaskListener != null) {
-                                mUploadTaskListener.onUploadTasksSFailed(e.getMessage());
+                                mUploadTaskListener.onUploadTasksFailed(e.getMessage());
                             }
                             e.printStackTrace();
                         }
                     }
-                }, new com.android.volley.Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "onErrorResponse: error network");
@@ -371,7 +317,7 @@ public class Repository {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> authHeader = new HashMap<>();
-                authHeader.put("Authorization", authKey);
+                authHeader.put("Authorization", getAuthKey());
                 return authHeader;
             }
 
@@ -398,13 +344,13 @@ public class Repository {
         Log.d(TAG, "updateTask: "+UPDATE_TASK+taskId);
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
                 UPDATE_TASK+taskId, new JSONObject(postParams),
-                new com.android.volley.Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             if (mUpdateTaskListener != null) {
                                 Log.d(TAG, "onResponse:"+task.getDescription());
-                                mUpdateTaskListener.onUpdateTasksucceed(task,description,isCompleted);
+                                mUpdateTaskListener.onUpdateTasksSucceed(task,description,isCompleted);
                             }
 
                         } catch (Exception e) {
@@ -414,7 +360,7 @@ public class Repository {
                             e.printStackTrace();
                         }
                     }
-                }, new com.android.volley.Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "onErrorResponse: error network");
@@ -423,7 +369,7 @@ public class Repository {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> authHeader = new HashMap<>();
-                authHeader.put("Authorization", authKey);
+                authHeader.put("Authorization", getAuthKey());
                 return authHeader;
             }
 
@@ -445,23 +391,23 @@ public class Repository {
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
                 DELETE_TASK+id, new JSONObject(postParams),
-                new com.android.volley.Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             Log.d(TAG, "onResponse: "+"task");
                             if (mDeleteTaskListener != null) {
-                                mDeleteTaskListener.onDeleteTasksucceed(taskToDelete);
+                                mDeleteTaskListener.onDeleteTasksSucceed(taskToDelete);
                             }
 
                         } catch (Exception e) {
                             if (mDeleteTaskListener != null) {
-                                mDeleteTaskListener.onDeleteTasksSFailed();
+                                mDeleteTaskListener.onDeleteTasksFailed();
                             }
                             e.printStackTrace();
                         }
                     }
-                }, new com.android.volley.Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "onErrorResponse: error network");
@@ -470,7 +416,7 @@ public class Repository {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> authHeader = new HashMap<>();
-                authHeader.put("Authorization", authKey);
+                authHeader.put("Authorization", getAuthKey());
                 return authHeader;
             }
 
@@ -482,19 +428,21 @@ public class Repository {
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(8000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Adding request to request queue
         requestQueue.add(jsonObjReq);
-
     }
 
-    public String getAuthKey() {
-        return authKey;
-    }
+    public void setAuthKey(String authKey) { super.setAuthKey(authKey); }
 
+    public String getAuthKey() { return super.getAuthKey(); }
 
-    public void setTask(Task task) {
-        this.mTask = task;
-    }
+    public void setTask(Task task) { super.setTask(task); }
 
     public Task getTask() {
-        return mTask;
+        return super.getTask();
+    }
+
+    public void setTherapist(Therapist therapist) { super.setTherapist(therapist); }
+
+    public Therapist getTherapist() {
+        return super.getTherapist();
     }
 }

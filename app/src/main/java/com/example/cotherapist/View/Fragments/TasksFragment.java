@@ -1,4 +1,4 @@
-package com.example.justdoit.View.Fragments;
+package com.example.cotherapist.View.Fragments;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -27,13 +27,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import com.example.justdoit.Model.AlertRecevier;
-import com.example.justdoit.Model.Task;
-import com.example.justdoit.Model.TaskAdapter;
-import com.example.justdoit.Model.ViewModelEnum;
-import com.example.justdoit.Model.ViewModelFactory;
-import com.example.justdoit.R;
-import com.example.justdoit.ViewModel.TasksViewModel;
+import com.example.cotherapist.Model.AlertRecevier;
+import com.example.cotherapist.Model.Task;
+import com.example.cotherapist.Model.TaskAdapter;
+import com.example.cotherapist.Model.ViewModelEnum;
+import com.example.cotherapist.Model.ViewModelFactory;
+import com.example.cotherapist.R;
+import com.example.cotherapist.ViewModel.TasksViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayInputStream;
@@ -41,7 +41,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;

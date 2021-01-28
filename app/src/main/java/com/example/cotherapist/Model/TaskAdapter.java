@@ -1,8 +1,7 @@
-package com.example.justdoit.Model;
+package com.example.cotherapist.Model;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.ActionMode;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,19 +23,14 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.justdoit.R;
-import com.example.justdoit.ViewModel.AdapterViewModel;
-import com.example.justdoit.ViewModel.TasksViewModel;
+import com.example.cotherapist.R;
+import com.example.cotherapist.ViewModel.AdapterViewModel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

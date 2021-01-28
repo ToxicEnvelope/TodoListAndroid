@@ -1,15 +1,13 @@
-package com.example.justdoit.View;
+package com.example.cotherapist.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
-import com.example.justdoit.Model.AlertRecevier;
-import com.example.justdoit.R;
-import com.example.justdoit.View.Fragments.LoginFragment;
-import com.example.justdoit.View.Fragments.TasksFragment;
+import com.example.cotherapist.Model.AlertRecevier;
+import com.example.cotherapist.R;
+import com.example.cotherapist.View.Fragments.TasksFragment;
 
 public class TaskAcitivty extends AppCompatActivity {
 
@@ -28,6 +26,8 @@ public class TaskAcitivty extends AppCompatActivity {
                 .replace(R.id.task_activity_layout, TasksFragment.newInstance(), TASK_FRAG)
                 .commit();
     }
+
+
 
     @Override
     protected void onDestroy() {

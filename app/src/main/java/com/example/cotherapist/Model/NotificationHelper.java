@@ -1,4 +1,4 @@
-package com.example.justdoit.Model;
+package com.example.cotherapist.Model;
 
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
@@ -13,7 +13,7 @@ import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.justdoit.R;
+import com.example.cotherapist.R;
 
 
 public class NotificationHelper extends ContextWrapper {

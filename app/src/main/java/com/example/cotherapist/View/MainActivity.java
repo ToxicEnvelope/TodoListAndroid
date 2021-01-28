@@ -1,22 +1,18 @@
-package com.example.justdoit.View;
+package com.example.cotherapist.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.justdoit.Model.AlertRecevier;
-import com.example.justdoit.R;
-import com.example.justdoit.View.Fragments.LoginFragment;
-import com.example.justdoit.View.Fragments.SignUpFragment;
+import com.example.cotherapist.R;
+import com.example.cotherapist.View.Fragments.LoginFragment;
+import com.example.cotherapist.View.Fragments.SignUpFragment;
 
 public class MainActivity extends AppCompatActivity implements SignUpFragment.SignUpListener, LoginFragment.LoginListener {
     private final String LOGIN_FRAG = "login_details_fragment";
     private final String SIGN_UP_FRAG = "sign_up_fragment";
     private final String TASKS_FRAG= "tasks";
-
-
-
 
 
     @Override

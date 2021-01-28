@@ -1,4 +1,4 @@
-package com.example.justdoit.View.Fragments;
+package com.example.cotherapist.View.Fragments;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.justdoit.Model.User;
-import com.example.justdoit.Model.ViewModelEnum;
-import com.example.justdoit.Model.ViewModelFactory;
-import com.example.justdoit.R;
-import com.example.justdoit.ViewModel.SignUpViewModel;
+import com.example.cotherapist.Model.Patient.Patient;
+import com.example.cotherapist.Model.Therapist.Therapist;
+import com.example.cotherapist.Model.ViewModelEnum;
+import com.example.cotherapist.Model.ViewModelFactory;
+import com.example.cotherapist.R;
+import com.example.cotherapist.ViewModel.SignUpViewModel;
 
 public class SignUpFragment extends Fragment {
 
@@ -30,7 +32,6 @@ public class SignUpFragment extends Fragment {
 
     private Observer<Boolean> mSignInSucceedObserver;
     private Observer<Boolean> mSignInFailedObserver;
-
 
     public interface SignUpListener {
         void onGoLogin();
@@ -60,9 +61,10 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.sign_up_fragment, container, false);
-        final EditText nameEt = view.findViewById(R.id.name_et);
+        final EditText fullNameEt = view.findViewById(R.id.full_name_et);
         final EditText emailEt = view.findViewById(R.id.email_et);
         final EditText passwordEt = view.findViewById(R.id.password_et);
+        final EditText confirmPasswordEt = view.findViewById(R.id.confirm_password_et);
         final Button loginBtn = view.findViewById(R.id.login_btn);
         final Button signUpBtn=view.findViewById(R.id.sign_up_btn);
 
@@ -71,11 +73,17 @@ public class SignUpFragment extends Fragment {
             public void onClick(View view) {
                 if(listener!=null){
                     Log.d(TAG, "onClick: "+"signUp");
-                    String name=nameEt.getText().toString();
-                    String email=emailEt.getText().toString();
+                    String fullName = fullNameEt.getText().toString();
+                    String email = emailEt.getText().toString();
                     String password = passwordEt.getText().toString();
-                    User user=new User(name,email,password);
-                    mViewModel.signUpUser(user);
+                    String confirmPassword = confirmPasswordEt.getText().toString();
+                    if (password.equals(confirmPassword)) {
+                        Therapist therapist = new Therapist(fullName, email, password);
+                        Log.d(TAG, "Therapist object "+ therapist +"\n[DATA] " +  therapist.getFullName() + ", " + therapist.getEmail() + ", "+ therapist.getPassword());
+                        mViewModel.signUpUser(therapist);
+                    } else {
+                        Toast.makeText(view.getContext(), "Password doesn't match!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -114,6 +122,7 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onChanged(Boolean aBoolean) {
                 Log.d(TAG, "failed: "+"error");
+                Toast.makeText(getContext(), "Email already in use!", Toast.LENGTH_LONG).show();
             }
         };
 

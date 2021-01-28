@@ -1,4 +1,4 @@
-package com.example.justdoit.ViewModel;
+package com.example.cotherapist.ViewModel;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,8 +6,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.justdoit.Model.Task;
-import com.example.justdoit.Repository.Repository;
+import com.example.cotherapist.Model.Task;
+import com.example.cotherapist.Repository.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,17 +55,17 @@ public class TasksViewModel extends ViewModel {
     private void attachDownloadTaskListener() {
         mRepository.setDownloadTasksListener(new Repository.RepositoryDownloadTasksInterface() {
             @Override
-            public void onUserDownloadTasksucceed(List<Task> taskList) {
+            public void onUserDownloadTasksSucceed(List<Task> taskList) {
                 if (!mTaskList.isEmpty()) {
                     mTaskList.clear();
                 }
                 mTaskList.addAll(taskList);
-                Log.d(TAG, "onUserDownloadTasksucceed: " + mTaskList.size());
+                Log.d(TAG, "onUserDownloadTaskSucceed: " + mTaskList.size());
                 mTasksDownloadSucceed.setValue(mTaskList);
             }
 
             @Override
-            public void onUserDownloadTasksSFailed(String error) {
+            public void onUserDownloadTasksFailed(String error) {
                 mTasksDownloadFailed.setValue(error);
             }
         });
@@ -90,15 +90,16 @@ public class TasksViewModel extends ViewModel {
 
     private void attachUploadTaskListener() {
         mRepository.setUploadTaskListener(new Repository.RepositoryUploadTaskInterface() {
+
             @Override
-            public void onUploadTasksucceed(Task task) {
+            public void onUploadTasksSucceed(Task task) {
                 mTaskList.add(task);
                 mTasksUploadSucceed.setValue(task);
 
             }
 
             @Override
-            public void onUploadTasksSFailed(String error) {
+            public void onUploadTasksFailed(String error) {
                 mTasksUploadFailed.setValue(error);
             }
         });
@@ -123,9 +124,9 @@ public class TasksViewModel extends ViewModel {
     private void attachUpdateTaskListener() {
         mRepository.setUpdateTaskListener(new Repository.RepositoryUpdateTaskInterface() {
             @Override
-            public void onUpdateTasksucceed(Task task,String description,boolean isComplete) {
-                Log.d(TAG, "onUpdateTasksucceed: "+task.toString());
-                Log.d(TAG, "onUpdateTasksucceed: "+mPosition);
+            public void onUpdateTasksSucceed(Task task, String description, boolean isComplete) {
+                Log.d(TAG, "onUpdateTaskSucceed: "+task.toString());
+                Log.d(TAG, "onUpdateTaskSucceed: "+mPosition);
 
 
                 if(mTaskList.indexOf(task)!=-1) {
@@ -165,15 +166,15 @@ public class TasksViewModel extends ViewModel {
     private void attachDeleteTaskListener() {
         mRepository.setDeleteTaskListener(new Repository.RepositoryDeleteTaskInterface() {
             @Override
-            public void onDeleteTasksucceed(Task task) {
+            public void onDeleteTasksSucceed(Task task) {
                 mPosition = mTaskList.indexOf(task);
                 mTaskList.remove(task);
-                Log.d(TAG, "onDeleteTasksucceed: ");
+                Log.d(TAG, "onDeleteTaskSucceed: ");
                 mTasksDeleteSucceed.setValue(task);
             }
 
             @Override
-            public void onDeleteTasksSFailed() {
+            public void onDeleteTasksFailed() {
 
             }
         });

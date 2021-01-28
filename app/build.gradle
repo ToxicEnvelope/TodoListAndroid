@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.example.justdoit"
+        applicationId "com.codereachable.cotherapist"
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 1

@@ -1,16 +1,9 @@
-package com.example.justdoit.Model;
-
-import android.util.Log;
+package com.example.cotherapist.Model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class Task implements Serializable {

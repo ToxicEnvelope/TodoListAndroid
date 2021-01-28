@@ -1,31 +1,29 @@
 package com.example.cotherapist.Model.Therapist;
 
-public class User {
-    private String mName;
+public class Therapist {
+    private String mFullName;
     private String mPassword;
     private String mEmail;
 
 
-    public User(){}
+    public Therapist(){}
 
-    public User(String name, String email, String password) {
-        this.mName = name;
+    public Therapist(String email, String password) {
+        this.mFullName = null;
         this.mPassword = password;
         this.mEmail = email;
     }
 
-    public User(String email, String password) {
+    public Therapist(String fullName, String email, String password) {
+        this.mFullName = fullName;
         this.mPassword = password;
         this.mEmail = email;
     }
 
+    public String getFullName() { return mFullName;}
 
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        this.mName = name;
+    public void setFullName(String fullName) {
+        this.mFullName = fullName;
     }
 
     public String getPassword() {

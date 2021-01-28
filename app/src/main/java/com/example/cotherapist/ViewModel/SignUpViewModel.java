@@ -1,12 +1,12 @@
-package com.example.justdoit.ViewModel;
+package com.example.cotherapist.ViewModel;
 
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.justdoit.Model.User;
-import com.example.justdoit.Repository.Repository;
+import com.example.cotherapist.Model.Therapist.Therapist;
+import com.example.cotherapist.Repository.Repository;
 
 public class SignUpViewModel extends ViewModel {
 
@@ -44,14 +44,14 @@ public class SignUpViewModel extends ViewModel {
             }
 
             @Override
-            public void onUserSignUpSFailed() {
+            public void onUserSignUpFailed() {
                 mSignUpFailed.setValue(false);
             }
         });
     }
 
-    public void signUpUser(User user) {
-        mRepository.signUpUser(user);
+    public void signUpUser(Therapist therapist) {
+        mRepository.signUpUser(therapist);
     }
 
     public String getAuthKey() {

@@ -1,22 +1,22 @@
-package com.example.cotherapist.Model;
+package com.example.cotherapist.Model.Patient;
 
-public class User{
+public class Patient {
     private String mName;
-    private String mPassword;
-    private String mEmail;
+    private String mDow;
+    private String mHour;
 
 
-    public User(){}
+    public Patient(){}
 
-    public User(String name, String email, String password) {
+    public Patient(String name, String hour, String dow) {
         this.mName = name;
-        this.mPassword = password;
-        this.mEmail = email;
+        this.mDow = dow;
+        this.mHour = hour;
     }
 
-    public User(String email, String password) {
-        this.mPassword = password;
-        this.mEmail = email;
+    public Patient(String hour, String dow) {
+        this.mDow = dow;
+        this.mHour = hour;
     }
 
 
@@ -28,20 +28,20 @@ public class User{
         this.mName = name;
     }
 
-    public String getPassword() {
-        return mPassword;
+    public String getPreferredDayOfWeek() {
+        return mDow;
     }
 
-    public void setPassword(String password) {
-        this.mPassword = password;
+    public void setPreferredDayOfWeek(String dob) {
+        this.mDow = dob;
     }
 
-    public String getEmail() {
-        return mEmail;
+    public String getPreferredHour() {
+        return mHour;
     }
 
-    public void setEmail(String email) {
-        this.mEmail = email;
+    public void setPreferredHour(String hour) {
+        this.mHour = hour;
     }
 
 

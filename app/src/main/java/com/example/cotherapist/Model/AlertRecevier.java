@@ -1,4 +1,4 @@
-package com.example.justdoit.Model;
+package com.example.cotherapist.Model;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.justdoit.Repository.Repository;
-import com.example.justdoit.View.Fragments.TasksFragment;
+import com.example.cotherapist.Repository.Repository;
+import com.example.cotherapist.View.Fragments.TasksFragment;
 
 import java.io.IOException;
 

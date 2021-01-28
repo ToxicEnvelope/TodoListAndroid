@@ -1,4 +1,4 @@
-package com.example.justdoit.View.Fragments;
+package com.example.cotherapist.View.Fragments;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,10 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.justdoit.Model.ViewModelEnum;
-import com.example.justdoit.Model.ViewModelFactory;
-import com.example.justdoit.R;
-import com.example.justdoit.ViewModel.LoginViewModel;
+import com.example.cotherapist.Model.ViewModelEnum;
+import com.example.cotherapist.Model.ViewModelFactory;
+import com.example.cotherapist.R;
+import com.example.cotherapist.ViewModel.LoginViewModel;
 
 public class LoginFragment extends Fragment {
 
