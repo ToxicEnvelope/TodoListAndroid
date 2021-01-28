@@ -1,9 +1,4 @@
-package com.example.justdoit.Model;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+package com.example.cotherapist.Model;
 
 public class User{
     private String mName;

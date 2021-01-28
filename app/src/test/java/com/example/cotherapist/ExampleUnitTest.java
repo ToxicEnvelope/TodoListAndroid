@@ -1,3 +1,4 @@
+//package com.example.cotherapist;
 package com.example.justdoit;
 
 import org.junit.Test;
